@@ -222,9 +222,8 @@ export default function SimpleForm() {
             </div>
           ))}
           {simData.length > 20 && <div>... ({simData.length} points)</div>}
-        </div>
-      )}
-
-    </div>   {/* ← fermeture correcte du div principal */}
+    </div>
+  )}
+</div>
   );
-                                                                   }
+}
