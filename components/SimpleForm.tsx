@@ -105,7 +105,7 @@ export default function SimpleForm() {
 
   return (
     <div className="p-4 max-w-xl mx-auto">
-
+)
       {/* DEBUG BUILD TAG */}
       <div className="text-xs text-gray-500 mb-2">
         Build: {process.env.NEXT_PUBLIC_BUILD_TAG || "unknown"}
