@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import React, { useMemo, useState } from "react";
 import { FLUIDS, MATERIALS, DEFAULTS } from "../utils/constants";
@@ -104,8 +104,7 @@ export default function SimpleForm() {
   }
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-)
+    <div className="p-4 max-w-xl mx-auto">   {/* ← ici c'était ) au lieu de } */}
       {/* DEBUG BUILD TAG */}
       <div className="text-xs text-gray-500 mb-2">
         Build: {process.env.NEXT_PUBLIC_BUILD_TAG || "unknown"}
@@ -226,6 +225,6 @@ export default function SimpleForm() {
         </div>
       )}
 
-    </div>
+    </div>   {/* ← fermeture correcte du div principal */}
   );
-                                                                   
+      }                                                                  
