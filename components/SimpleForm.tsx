@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import React, { useMemo, useState } from "react";
 import { FLUIDS, MATERIALS, DEFAULTS } from "../utils/constants";
@@ -227,4 +227,4 @@ export default function SimpleForm() {
 
     </div>   {/* ← fermeture correcte du div principal */}
   );
-      }                                                                  
+                                                                   }
