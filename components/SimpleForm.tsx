@@ -86,7 +86,7 @@ export default function SimpleForm() {
         mat,
         FLUIDS.water
       );
-      const Qloss = local.QlossW;
+      const Qloss = local.QlossW || 0;
       const Pin = requiredPowerW;
       const dTdt = (Pin - Qloss) / C;
 
@@ -104,76 +104,121 @@ export default function SimpleForm() {
   }
 
   return (
-    <div className="p-4 max-w-xl mx-auto">   {/* ← ici c'était ) au lieu de } */}
+    <div className="p-4 max-w-xl mx-auto">
+
       {/* DEBUG BUILD TAG */}
       <div className="text-xs text-gray-500 mb-2">
         Build: {process.env.NEXT_PUBLIC_BUILD_TAG || "unknown"}
       </div>
 
-      <h2 className="text-xl font-semibold mb-3">Simulateur thermique — version professionnelle</h2>
+      <h2 className="text-xl font-semibold mb-3">
+        Simulateur thermique — version professionnelle
+      </h2>
 
       {/* INPUTS */}
       <div className="grid grid-cols-2 gap-3">
 
         <label className="block">
           Volume (L)
-          <input className="w-full border p-2 rounded" type="number"
-            value={liters} onChange={e => setLiters(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            value={liters}
+            onChange={(e) => setLiters(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Débit pompe (L/min)
-          <input className="w-full border p-2 rounded" type="number"
-            value={flowLpm} onChange={e => setFlowLpm(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            value={flowLpm}
+            onChange={(e) => setFlowLpm(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Temp initiale (°C)
-          <input className="w-full border p-2 rounded" type="number"
-            value={initialTemp} onChange={e => setInitialTemp(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            value={initialTemp}
+            onChange={(e) => setInitialTemp(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Temp cible (°C)
-          <input className="w-full border p-2 rounded" type="number"
-            value={targetTemp} onChange={e => setTargetTemp(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            value={targetTemp}
+            onChange={(e) => setTargetTemp(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Temps cible (min)
-          <input className="w-full border p-2 rounded" type="number"
-            value={timeMin} onChange={e => setTimeMin(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            value={timeMin}
+            onChange={(e) => setTimeMin(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Temp ambiante (°C)
-          <input className="w-full border p-2 rounded" type="number"
-            value={ambientTemp} onChange={e => setAmbientTemp(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            value={ambientTemp}
+            onChange={(e) => setAmbientTemp(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Diamètre intérieur (m)
-          <input className="w-full border p-2 rounded" type="number" step="0.001"
-            value={innerDiameter} onChange={e => setInnerDiameter(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            step="0.001"
+            value={innerDiameter}
+            onChange={(e) => setInnerDiameter(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Épaisseur (m)
-          <input className="w-full border p-2 rounded" type="number" step="0.001"
-            value={thickness} onChange={e => setThickness(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            step="0.001"
+            value={thickness}
+            onChange={(e) => setThickness(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Longueur tuyau (m)
-          <input className="w-full border p-2 rounded" type="number" step="0.1"
-            value={pipeLength} onChange={e => setPipeLength(Number(e.target.value))} />
+          <input
+            className="w-full border p-2 rounded"
+            type="number"
+            step="0.1"
+            value={pipeLength}
+            onChange={(e) => setPipeLength(Number(e.target.value))}
+          />
         </label>
 
         <label className="block">
           Matériau
-          <select className="w-full border p-2 rounded" value={materialKey}
-            onChange={e => setMaterialKey(e.target.value)}>
-            {Object.keys(MATERIALS).map(k => (
+          <select
+            className="w-full border p-2 rounded"
+            value={materialKey}
+            onChange={(e) => setMaterialKey(e.target.value)}
+          >
+            {Object.keys(MATERIALS).map((k) => (
               <option key={k} value={k}>
                 {(MATERIALS as any)[k].name}
               </option>
@@ -187,12 +232,12 @@ export default function SimpleForm() {
       <div className="mt-4 p-3 border rounded space-y-2">
         <div>Puissance idéale : <b>{Math.round(powerIdeal.powerW)} W</b></div>
         <div>Énergie nécessaire : <b>{Math.round(powerIdeal.energyJ / 1000)} kJ</b></div>
-        <div>Perte tuyau : <b>{Math.round(pipeTransfer.QlossW)} W</b></div>
+        <div>Perte tuyau : <b>{Math.round(pipeTransfer.QlossW || 0)} W</b></div>
         <div>Puissance recommandée : <b>{Math.round(requiredPowerW)} W</b></div>
         <div>ΔT par passe : <b>{perPass.deltaT?.toFixed(2) || "0.00"} °C</b></div>
         <div>Vitesse fluide : <b>{velocity.toFixed(3)} m/s</b></div>
-        <div>Reynolds intérieur : <b>{Math.round(pipeTransfer.insideRe)}</b></div>
-        <div>Constante τ : <b>{Math.round(lumped.tauSeconds)}</b> s</div>
+        <div>Reynolds intérieur : <b>{Math.round(pipeTransfer.insideRe || 0)}</b></div>
+        <div>Constante τ : <b>{Math.round(lumped.tauSeconds)} s</b></div>
       </div>
 
       {/* BUTTONS */}
@@ -204,10 +249,7 @@ export default function SimpleForm() {
           Lancer simulation
         </button>
 
-        <button
-          className="px-3 py-2 rounded bg-gray-400"
-          onClick={resetSim}
-        >
+        <button className="px-3 py-2 rounded bg-gray-400" onClick={resetSim}>
           Réinitialiser
         </button>
       </div>
@@ -216,14 +258,15 @@ export default function SimpleForm() {
       {simData.length > 0 && (
         <div className="mt-4 p-3 border rounded">
           <h3 className="text-lg font-semibold mb-2">Résultats simulation</h3>
-          {simData.slice(0, 20).map(row => (
+          {simData.slice(0, 20).map((row) => (
             <div key={row.t}>
               t={row.t}s → {row.T.toFixed(2)} °C
             </div>
           ))}
           {simData.length > 20 && <div>... ({simData.length} points)</div>}
+        </div>
+      )}
+
     </div>
-  )}
-</div>
   );
-}
+          }
